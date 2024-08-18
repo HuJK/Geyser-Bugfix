@@ -39,10 +39,12 @@ public final class ConnectionRequestEvent implements Event, Cancellable {
 
     private boolean cancelled;
     private final InetSocketAddress ip;
+    private final InetSocketAddress recpentip;
     private final InetSocketAddress proxyIp;
 
-    public ConnectionRequestEvent(@NonNull InetSocketAddress ip, @Nullable InetSocketAddress proxyIp) {
+    public ConnectionRequestEvent(@NonNull InetSocketAddress ip, @NonNull InetSocketAddress recpentip, @Nullable InetSocketAddress proxyIp) {
         this.ip = ip;
+        this.recpentip = recpentip;
         this.proxyIp = proxyIp;
     }
 
@@ -76,6 +78,17 @@ public final class ConnectionRequestEvent implements Event, Cancellable {
     @NonNull
     public InetSocketAddress inetSocketAddress() {
         return ip;
+    }
+
+    /**
+     * The server IP address of the client attempting to connect
+     * for multiple-ip server to determine whcih source address should be used at response
+     *
+     * @return the IP address of the client attempting to connect
+     */
+    @NonNull
+    public InetSocketAddress recpentAddress() {
+        return srcip;
     }
 
     /**

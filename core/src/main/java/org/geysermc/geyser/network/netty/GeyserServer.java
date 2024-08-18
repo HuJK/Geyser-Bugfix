@@ -242,7 +242,7 @@ public final class GeyserServer {
                 .childHandler(serverInitializer);
     }
 
-    public boolean onConnectionRequest(InetSocketAddress inetSocketAddress) {
+    public boolean onConnectionRequest(InetSocketAddress inetSocketAddress,InetSocketAddress recipientAddress) {
         List<String> allowedProxyIPs = geyser.getConfig().getBedrock().getProxyProtocolWhitelistedIPs();
         if (geyser.getConfig().getBedrock().isEnableProxyProtocol() && !allowedProxyIPs.isEmpty()) {
             boolean isWhitelistedIP = false;
@@ -272,6 +272,7 @@ public final class GeyserServer {
 
         ConnectionRequestEvent requestEvent = new ConnectionRequestEvent(
             inetSocketAddress, 
+            recipientAddress, 
             this.proxiedAddresses != null ? this.proxiedAddresses.get(inetSocketAddress) : null
         );
         geyser.eventBus().fire(requestEvent);

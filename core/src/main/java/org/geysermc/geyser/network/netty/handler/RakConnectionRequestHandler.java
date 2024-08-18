@@ -84,7 +84,7 @@ public class RakConnectionRequestHandler extends ChannelInboundHandlerAdapter {
         ByteBuf magicBuf = ctx.channel().config().getOption(RakChannelOption.RAK_UNCONNECTED_MAGIC);
         long guid = ctx.channel().config().getOption(RakChannelOption.RAK_GUID);
 
-        if (!this.server.onConnectionRequest(packet.sender())) {
+        if (!this.server.onConnectionRequest(packet.sender(),packet.recipient())) {
             this.sendConnectionBanned(ctx, packet.sender(), magicBuf, guid);
         } else {
             ctx.fireChannelRead(msg);
